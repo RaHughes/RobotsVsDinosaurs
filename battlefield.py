@@ -6,7 +6,7 @@ class Battlefield:
     def __init__(self):
         self.fleet = Fleet()
         self.herd = Herd()
-        self.turn = 0
+        self.flag = False
 
     def run_game(self):
         self.fleet.create_fleet()
@@ -24,14 +24,18 @@ class Battlefield:
         print()
     
     def battle(self):
-        while self.fleet.robots != [] or self.herd.dinosaurs != []:
+        while self.flag == False:
             self.check_health()
             random_robot = random.choice(self.fleet.robots)
             self.robot_turn(random_robot)
             self.check_health()
+            if self.flag == True:
+                break
             random_dino = random.choice(self.herd.dinosaurs)
-            self.dino_turn(random_dino)    
-
+            self.dino_turn(random_dino)
+            self.check_health()  
+        print()
+        print('The battle has concluded!')
 
     def dino_turn(self, dinosaur):
         print(f'Looks like its {dinosaur.name} turn!')
@@ -47,9 +51,9 @@ class Battlefield:
         names = []
         for dino in self.herd.dinosaurs:
             names.append(dino.name)
-        target = input(f'Which Dinosaur would you like to attack? {names}: ')
+        target = input(f'Which Dinosaur would you like to attack? {names}: ').lower()
         for dino in self.herd.dinosaurs:
-            if target == dino.name:
+            if target == dino.name.lower():
                 robot.attack(dino)
                 print()  
 
@@ -57,28 +61,37 @@ class Battlefield:
         names = []
         for robot in self.fleet.robots:
             names.append(robot.name)
-        target = input(f'Which Robot would you like to attack? {names}: ')
+        target = input(f'Which Robot would you like to attack? {names}: ').lower()
         for robot in self.fleet.robots:
-            if target == robot.name:
+            if target == robot.name.lower():
                 dino.attack(robot)
                 print()
 
     def display_winners(self):
         if self.fleet.robots == []:
+            print()
             print('Looks like the Dinosaurs have won!')
+            print()
         elif self.herd.dinosaurs == []:
-            print('Looks like the Robots have won!')    
+            print()
+            print('Looks like the Robots have won!')   
+            print() 
 
     def check_health(self):
         for dino in self.herd.dinosaurs:
             if dino.health <= 0:
-                print(f'Looks like {dino.name} was defeated!')
+                print(f'{dino.name} was defeated!')
+                print()
                 self.herd.dinosaurs.remove(dino)
             else:
                 continue    
         for robot in self.fleet.robots:
             if robot.health <= 0:
-                print(f'Looks like {robot.name} was defeated!')
+                print(f'{robot.name} was defeated!')
+                print()
                 self.fleet.robots.remove(robot)   
             else:
-                continue         
+                continue
+        if self.fleet.robots == [] or self.herd.dinosaurs == []:
+                self.flag = True
+          
