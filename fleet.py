@@ -5,6 +5,6 @@ class Fleet:
         self.robots = []
 
     def create_fleet(self):
-        self.robots.append(Robot('Optimus Prime'))
-        self.robots.append(Robot('Bumble Bee'))
+        self.robots.append(Robot('Optimus-prime'))
+        self.robots.append(Robot('Bumble-bee'))
         self.robots.append(Robot('Megatron'))
