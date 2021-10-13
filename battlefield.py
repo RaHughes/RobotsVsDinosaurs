@@ -51,21 +51,33 @@ class Battlefield:
         names = []
         for dino in self.herd.dinosaurs:
             names.append(dino.name)
-        target = input(f'Which Dinosaur would you like to attack? {names}: ').lower()
-        for dino in self.herd.dinosaurs:
-            if target == dino.name.lower():
-                robot.attack(dino)
-                print()  
-
+        target = input(f'Which Dinosaur would you like to attack? {names}: ').capitalize()
+        if target in names:
+            for dino in self.herd.dinosaurs:
+                if target == dino.name:
+                    robot.attack(dino)
+                    print()      
+        elif target not in names:
+            print()
+            print(f'It looks like {target} was not an option. Please try again.')
+            print()
+            self.show_robo_opponent_options(robot)                
+                
     def show_dino_opponent_options(self, dino):
         names = []
         for robot in self.fleet.robots:
             names.append(robot.name)
-        target = input(f'Which Robot would you like to attack? {names}: ').lower()
-        for robot in self.fleet.robots:
-            if target == robot.name.lower():
-                dino.attack(robot)
-                print()
+        target = input(f'Which Robot would you like to attack? {names}: ').capitalize()
+        if target in names:
+            for robot in self.fleet.robots:
+                if target == robot.name:
+                    dino.attack(robot)
+                    print()
+        elif target not in names:
+            print()
+            print(f'It looks like {target} was not an option. Please try again.')
+            print()
+            self.show_dino_opponent_options(dino)            
 
     def display_winners(self):
         if self.fleet.robots == []:
@@ -76,6 +88,7 @@ class Battlefield:
             print()
             print('Looks like the Robots have won!')   
             print() 
+            print('Thanks for playing Robots vs Dinosaurs!')
 
     def check_health(self):
         for dino in self.herd.dinosaurs:
