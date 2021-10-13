@@ -5,6 +5,6 @@ class Herd:
         self.dinosaurs = []
 
     def create_herd(self):
-        self.dinosaurs.append(Dinosaur('T-Rex', 100))
-        self.dinosaurs.append(Dinosaur('Stego', 100))
-        self.dinosaurs.append(Dinosaur('Raptor', 100))     
+        self.dinosaurs.append(Dinosaur('T-rex', 50))
+        self.dinosaurs.append(Dinosaur('Stego', 40))
+        self.dinosaurs.append(Dinosaur('Raptor', 30))     
